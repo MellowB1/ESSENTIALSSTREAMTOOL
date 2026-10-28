@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Essentials Stream Tool</title>
+  <meta name="description" content="Overlays de OBS para fangames de Pokémon Essentials y para partidas en emulador.">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("est-theme");
+      var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+</head>
+<body>
+  <div class="page">
+    <div class="switch" role="group" aria-label="Tema">
+      <button type="button" data-theme-choice="light">Claro</button>
+      <button type="button" data-theme-choice="dark">Oscuro</button>
+    </div>
+
+    <header class="hero">
+      <img class="mark" src="assets/icon.png" alt="" width="220" height="220">
+      <div class="hero-copy">
+        <h1>Essentials Stream Tool</h1>
+        <p class="sub">Play and Stream</p>
+        <p class="lede">Overlays de OBS para fangames de Pokémon Essentials y para partidas en emulador.</p>
+      </div>
+      <a class="download" href="https://github.com/MellowB1/EST-EssentialsStreamTool/releases/latest">DESCARGA</a>
+    </header>
+
+    <section class="live">
+      <h2>En el directo</h2>
+      <p>Muestra el equipo, las medallas y las vidas. Los presets salen listos para OBS. La app detecta el fangame e inyecta el script: no hace falta copiar plugins a mano.</p>
+
+      <div class="broadcast" aria-hidden="true">
+        <div class="party">
+          <article class="slot" data-type="grass"><span>Bulbasaur</span><em>Nv. 42</em><img src="assets/sprites/bulbasaur.png" alt="" width="38" height="38"><i style="--hp: 82%"></i></article>
+          <article class="slot" data-type="water"><span>Squirtle</span><em>Nv. 38</em><img src="assets/sprites/squirtle.png" alt="" width="43" height="43"><i style="--hp: 64%"></i></article>
+          <article class="slot" data-type="fire" data-hp="mid"><span>Charmander</span><em>Nv. 27</em><img src="assets/sprites/charmander.png" alt="" width="42" height="42"><i style="--hp: 41%"></i></article>
+          <article class="slot" data-type="electric"><span>Pikachu</span><em>Nv. 45</em><img src="assets/sprites/pikachu.png" alt="" width="50" height="50"><i style="--hp: 100%"></i></article>
+          <article class="slot" data-type="psychic"><span>Abra</span><em>Nv. 33</em><img src="assets/sprites/abra.png" alt="" width="63" height="63"><i style="--hp: 73%"></i></article>
+          <article class="slot" data-type="fairy" data-hp="low"><span>Clefairy</span><em>Nv. 19</em><img src="assets/sprites/clefairy.png" alt="" width="47" height="47"><i style="--hp: 28%"></i></article>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <p>Vidas</p>
+            <div class="hearts">
+              <b></b><b></b><b></b><b></b><b class="off"></b><b class="off"></b>
+            </div>
+          </div>
+          <div class="meter">
+            <p>Medallas</p>
+            <div class="badges">
+              <img src="assets/badges/badge-1.png" alt="" width="32" height="32">
+              <img src="assets/badges/badge-2.png" alt="" width="32" height="32">
+              <img src="assets/badges/badge-3.png" alt="" width="32" height="32">
+              <img src="assets/badges/badge-4.png" alt="" width="32" height="32">
+              <img src="assets/badges/badge-5.png" alt="" width="32" height="32">
+              <img class="off" src="assets/badges/badge-6.png" alt="" width="32" height="32">
+              <img class="off" src="assets/badges/badge-7.png" alt="" width="32" height="32">
+              <img class="off" src="assets/badges/badge-8.png" alt="" width="32" height="32">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="split">
+      <div>
+        <h2>Fangames</h2>
+        <p>Compatible con Pokémon Essentials desde la v16 en adelante. BES y LBDS incluidas.</p>
+      </div>
+      <div>
+        <h2>Roms (próximamente)</h2>
+        <p>Compatible con roms de Game Boy-Game Boy Color, Game Boy Advance, Nintendo DS y Nintendo 3DS en su versión en español.</p>
+      </div>
+    </section>
+
+    <section class="emus">
+      <h2>Emuladores compatibles (próximamente)</h2>
+      <div class="emu-row">
+        <a aria-disabled="true" tabindex="-1">SameBoy<span>Game Boy y Game Boy Color</span></a>
+        <a aria-disabled="true" tabindex="-1">mGBA<span>Game Boy Advance</span></a>
+        <a aria-disabled="true" tabindex="-1">DeSmuME<span>Nintendo DS</span></a>
+        <a aria-disabled="true" tabindex="-1">Azahar<span>Nintendo 3DS</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <p>App de escritorio. Gratuita. Creada por MellowB1.</p>
+    </footer>
+  </div>
+  <script>
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll("[data-theme-choice]");
+
+    function apply(theme) {
+      if (theme === "dark") root.setAttribute("data-theme", "dark");
+      else root.removeAttribute("data-theme");
+      localStorage.setItem("est-theme", theme);
+      buttons.forEach(function (button) {
+        var on = button.getAttribute("data-theme-choice") === theme;
+        button.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        apply(button.getAttribute("data-theme-choice"));
+      });
+    });
+
+    apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
+
+    var download = document.querySelector(".download");
+    var releasePage = download.getAttribute("href");
+
+    download.addEventListener("click", function (event) {
+      event.preventDefault();
+      fetch("https://api.github.com/repos/MellowB1/EST-EssentialsStreamTool/releases/latest", {
+        headers: { Accept: "application/vnd.github+json" }
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("release");
+          return response.json();
+        })
+        .then(function (data) {
+          var assets = data.assets || [];
+          var zip = null;
+          for (var i = 0; i < assets.length; i++) {
+            var name = assets[i].name || "";
+            if (name.indexOf("EST-EssentialsStreamTool-") === 0 && /\.zip$/i.test(name)) {
+              zip = assets[i];
+              break;
+            }
+          }
+          location.href = zip && zip.browser_download_url ? zip.browser_download_url : releasePage;
+        })
+        .catch(function () {
+          location.href = releasePage;
+        });
+    });
+  </script>
+</body>
+</html>
